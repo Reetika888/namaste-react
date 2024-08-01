@@ -1,32 +1,9 @@
-import React from "react";
-import ReactDOM  from "react-dom/client";
-
-const Header = () => {
-    return (
-        <div className="header">
-            <div className="logo-container">
-                <img className="logo" src="https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png" alt="" />
-            </div>
-            <div className="nav-items">
-                 <ul>
-                    <li>Home</li>
-                    <li>About Us</li>
-                    <li>Contact Us</li>
-                    <li>Cart</li>
-                 </ul>
-            </div>
-        </div>
-    )
-};
-
-const resList = [
+let resList = [
     {
       "info": {
         "id": "405798",
         "name": "Chinese Wok",
         "cloudinaryImageId": "e0839ff574213e6f35b3899ebf1fc597",
-        "locality": "Malleshwaram",
-        "areaName": "Malleshwaram",
         "costForTwo": "₹250 for two",
         "cuisines": [
           "Chinese",
@@ -35,97 +12,11 @@ const resList = [
           "Desserts"
         ],
         "avgRating": 4.3,
-        "parentId": "61955",
         "avgRatingString": "4.3",
-        "totalRatingsString": "500+",
         "sla": {
           "deliveryTime": 46,
-          "lastMileTravel": 4.7,
-          "serviceability": "SERVICEABLE",
-          "slaString": "45-50 mins",
-          "lastMileTravelString": "4.7 km",
-          "iconType": "ICON_TYPE_EMPTY"
         },
-        "availability": {
-          "nextCloseTime": "2024-07-30 22:00:00",
-          "opened": true
-        },
-        "badges": {
-          
-        },
-        "isOpen": true,
-        "type": "F",
-        "badgesV2": {
-          "entityBadges": {
-            "imageBased": {
-              
-            },
-            "textBased": {
-              
-            },
-            "textExtendedBadges": {
-              
-            }
-          }
-        },
-        "aggregatedDiscountInfoV3": {
-          "header": "ITEMS",
-          "subHeader": "AT ₹149"
-        },
-        "orderabilityCommunication": {
-          "title": {
-            
-          },
-          "subTitle": {
-            
-          },
-          "message": {
-            
-          },
-          "customIcon": {
-            
-          }
-        },
-        "differentiatedUi": {
-          "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-          "differentiatedUiMediaDetails": {
-            "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-            "lottie": {
-              
-            },
-            "video": {
-              
-            }
-          }
-        },
-        "reviewsSummary": {
-          
-        },
-        "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-        "restaurantOfferPresentationInfo": {
-          
-        },
-        "externalRatings": {
-          "aggregatedRating": {
-            "rating": "4.2",
-            "ratingCount": "10+"
-          },
-          "source": "GOOGLE",
-          "sourceIconImageId": "v1704440323/google_ratings/rating_google_tag"
-        },
-        "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-      },
-      "analytics": {
-        "context": "seo-data-7c65162a-9e2f-4b0f-af0e-5813feb0b34b"
-      },
-      "cta": {
-        "link": "https://www.swiggy.com/restaurants/chinese-wok-malleshwaram-bangalore-405798",
-        "text": "RESTAURANT_MENU",
-        "type": "WEBLINK"
-      },
-      "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food_seo"
     },
-    {
       "info": {
         "id": "1452",
         "name": "Subway",
@@ -932,49 +823,4 @@ const resList = [
     }
   ];
 
-const RestauarantCard = (props)=> {
-    const {resData} = props;
-    const {name, cuisines,avgRatingString,costForTwo,sla } = resData?.info;
-    return (
-        <div className="res-card" style={{
-            backgroundColor : "#f0f0f0",
-        }}>
-           <img alt="res-logo" className="res-logo" src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/"+resData.info.cloudinaryImageId} />
-           <h3>{name}</h3>
-           <h4>{cuisines.join(", ")}</h4>
-           <h4>{avgRatingString}</h4>
-           <h4>{costForTwo}</h4>
-           <h4>{sla.deliveryTime} minutes</h4>
-        </div>
-    )
-}
-
-
-
-const Body = () => {
-  return (
-    <div className="body">
-        <div className="search">
-            Search
-        </div>
-        <div className="res-container">
-        {
-            resList.map((restaurant,index)=> (<RestauarantCard key={restaurant.info.id} resData = {restaurant} />)
-        )
-        }
-        </div>
-    </div>
-  )
-}
-
-const AppLayout = ()=> {
-    return (
-        <div className="app">
-            <Header />
-            <Body />
-        </div>
-    )
-}
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppLayout />);
+export default resList;

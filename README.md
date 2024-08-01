@@ -19,3 +19,23 @@
  - Tree Shaking(remove unused code => if not using all functions,classes => then remove it)
  - Transpilation
  - Different build  for Dev Bundles(takes lesser time),less optimization and Production Bundles(takes little more time, more optimization)
+
+ Two types of Export/Import
+
+ - Default Export/Import
+
+ export default Component;
+ import component from "path";
+
+ - Named Export/Import
+
+ export const Component;
+ import { Component } from "path";
+
+ # React Hooks
+
+ - Normal JS utility functions 
+ - useState() - use to generate superpowerful state variables in react
+ - useEffect() - 
+ 
+
