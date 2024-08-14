@@ -36,6 +36,13 @@
 
  - Normal JS utility functions 
  - useState() - use to generate superpowerful state variables in react
- - useEffect() - 
+ - useEffect()
+
+ # Two types of Routing in web apps
+
+ - Client Side Routing
+ - Server Side Routing
+
+
  
 
