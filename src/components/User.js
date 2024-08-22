@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 
 const User = ({name}) => {
    const [count] = useState(0);
@@ -6,7 +6,7 @@ const User = ({name}) => {
    console.log("usestate",useState())
 
    useEffect(()=>{
-
+      getUserInfo();
    },[])
 
    async function getUserInfo  ()  {
