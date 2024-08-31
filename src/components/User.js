@@ -3,8 +3,6 @@ import { useState , useEffect } from "react";
 const User = ({name}) => {
    const [count] = useState(0);
    const [count2] = useState(2);
-   console.log("usestate",useState())
-
    useEffect(()=>{
       getUserInfo();
    },[])
