@@ -1,6 +1,8 @@
+import UserContext from "../utils/UserContext";
 import User from "./User";
 import UserClass from "./UserClass";
 import { Component } from "react";
+import UserContext from "../utils/UserContext"
 
 class About extends Component {
     constructor(props) {
@@ -18,7 +20,6 @@ class About extends Component {
     componentWillUnmount() {
         clearInterval(this.timer);
         console.log("component will unmount");
-
     }
 
     render() {
@@ -26,6 +27,12 @@ class About extends Component {
         return (
             <div>
                 <h1>About component</h1>
+                <div>
+                    Logged In User
+                    <UserContext.Consumer>
+                        { ({loggedInUser})=> <h1 className="font-bold text-lg">{loggedInUser}</h1>}
+                    </UserContext.Consumer>
+                </div>
                 <h2>This is Namaste React Web Series!!!</h2>
                 <User />
                 <UserClass name={"Reetika (class)"} location={"Delhi"} />

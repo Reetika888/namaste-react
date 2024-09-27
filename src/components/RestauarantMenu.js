@@ -1,9 +1,13 @@
 import Shimmer from  "./Shimmer";
 import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import RestaurantCategories from "./RestaurantCategory";
+import { useState } from "react";
 
 const RestauarantMenu = () => {
     const { resId } = useParams();
+    const [showIndex,setShowIndex] = useState(0);
+    const [showItems,setShowItems] = useState(true);
     // Abstract fetch data logic and put it into useRestaurantMenu Hook
     const resInfo = useRestaurantMenu(resId);
     
@@ -14,30 +18,26 @@ const RestauarantMenu = () => {
     const {name,cuisines,costForTwoMessage} = resInfo?.cards[2]?.card?.card?.info;
 
     const {itemCards} = resInfo?.cards[4].groupedCard.cardGroupMap.REGULAR.cards[2].card.card;
-    console.log("itemcards", resInfo?.cards[4].groupedCard.cardGroupMap.REGULAR.cards[2].card.card)
-     
+
+    const SetShowIndexes = (index)=> {
+        setShowIndex(index);
+        setShowItems(!showItems);
+    }
+
+    const categories =  resInfo?.cards[4].groupedCard.cardGroupMap.REGULAR.cards.filter(c => c.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
     return  ( 
-    <div className="menu">
-            <h1>{name}</h1>
-            <p>
+    <div className="text-center">
+            <h1 className="font-bold my-6 text-2xl">{name}</h1>
+            <p className="font-bold text-lg">
             {cuisines.join(" , ")} - {costForTwoMessage}
-            </p>
-            <h2>Menu</h2>
-            
-                <ul>{
-            itemCards?.map((item) => {
-                return (
-                    <li key={item?.card?.info?.id}>
-                           {item?.card?.info?.name} - {" Rs. "}
-                           { item?.card?.info?.defaultPrice / 100 || item?.card?.info?.finalPrice / 100 || item?.card?.info?.price /100  }
-                     </li> 
-                )
-                })
-            }
-              </ul>
-            
+            </p> 
+         {/* categories accordion */}
+          {
+            categories.map((category,index)=>(
+                <RestaurantCategories setShowIndex={()=> {SetShowIndexes(index)}} showItems={index === showIndex  && showItems } key={category.card.card.title} data={category?.card?.card}/> 
+            ))
+          }
     </div>
     )
-  
 }
 export default RestauarantMenu; 

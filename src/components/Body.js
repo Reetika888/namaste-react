@@ -1,13 +1,18 @@
-import RestauarantCard from "./Restauarant";
-import { useState , useEffect } from "react";
+import RestauarantCard , { withPromotedLabel } from "./RestauarantCard";
+import { useState , useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import  UserContext  from "../utils/UserContext";
 
 const Body = () => {
 const [listOfRestaurants,setListOfRestauarants] = useState([]);
 const [searchText,setSearchText]=useState("");
 const [listOfRestaurantsList,setListOfRestauarantsList] = useState([]);
+console.log("listOfRestaurants",listOfRestaurants)
+
+const RestauarantCardPromoted = withPromotedLabel(RestauarantCard);
+const {loggedInUser,setUserName} = useContext(UserContext);
 
 useEffect(()=>{
   console.log("use effect called");
@@ -24,9 +29,9 @@ const handleSearch = ()=>{
   setListOfRestauarants(filteredList)
   }
 }
-
+// https://www.swiggy.com/dapi/restaurants/list/v5?lat=29.7453031&lng=78.5198094&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING
 const fetchData = async() => {
-  const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.960059122809971&lng=77.57337538383284&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+  const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
   const json = await data.json();
   // optional chaining
   setListOfRestauarants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
@@ -40,28 +45,38 @@ if(onlineStatus == false) return <h1>Looks like you are offline!! please check y
 
     return listOfRestaurants === 0 ? <Shimmer /> :  (
       <div className="body">
-          <div className="filter">
-              <div className="search">
-                <input type="text" className="search-box" onChange={(e) => setSearchText(e.target.value)} value={searchText}/>
-                <button onClick={
+          <div className="filter flex items-center">
+              <div className="m-4 p-4">
+                <input type="text" className="border border-solid border-black" onChange={(e) => setSearchText(e.target.value)} value={searchText}/>
+                <button className="px-4 py-2 bg-green-100 m-4 rounded-lg" onClick={
                   ()=>{
                     // Filter the restauarent cards and update the ui
                      handleSearch()
                   }
                 }>Search</button>
               </div>
-              <button className="filter-btn" onClick={()=>{
+              <div className="m-4 p-4">
+              <button className="px-4 py-2 bg-gray-50 rounded-lg" onClick={()=>{
                const filteredList = listOfRestaurants.filter((res)=>     
                 res.info.avgRating > 4.3   
                )
                 setListOfRestauarants(filteredList)
               }
               }> Top Rated Restaurants </button>
+              </div>
+              <div className="search m-4 p-4 flex items-center">
+                <label>UserName : </label>
+               <input  className="border border-black p-2" onChange={(e)=>setUserName(e.target.value)} value={loggedInUser}/>
+              </div>
           </div>
-          <div className="res-container">
+          <div className="flex flex-wrap">
           {
-              listOfRestaurants.map((restaurant)=> (
-             <Link to={`/restaurants/${restaurant.info.id}`} key={restaurant?.info?.id}> <RestauarantCard  resData = {restaurant} />
+              listOfRestaurants?.map((restaurant)=> (
+             <Link to={`/restaurants/${restaurant.info.id}`} key={restaurant?.info?.id}>
+                {/* {if res is promoted then add promoted label to it} */
+                  restaurant?.data?.promoted ? <withPromotedLabel resData = {restaurant}/>   : <RestauarantCard  resData = {restaurant} />
+                }
+              
              </Link>
               )
           )
